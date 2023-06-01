@@ -6,6 +6,17 @@ Ada is a language used in safety-critial domains. Key proparties are the followi
 - Large system w packages and abstractions
 - Built-in concurrency and real time support 
 - Exccellent toolf for a wide range of embedded platforms 
+
+
+### Protected objects
+A special composite type used for synchoronization. We may have a signle protected object or a class of objectes
+ - __protected__ Name
+ - __protected type__ Name
+  
+Protecte objects may have
+- Entries with a guard - may blcok calling tasks 
+- Procedures for exclusive acces to internal data 
+- Function for reading internal data (read only) 
   
 ### The Ravenscar profile 
 The full Ada concurrent constructs have been considere non-deterministic and unsuited for high-integrity applications. 
