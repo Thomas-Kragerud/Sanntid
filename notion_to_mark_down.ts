@@ -11,15 +11,19 @@ const notion = new Client({
   }
 });
 
-// passing notion client to the option
+const pages = [
+  { name: "Readme", token: "6df40dd4e66744bea38fcbe4dc97af9c", filePath: "README.md" },
+  { name: "Scheduling", token: "8819161ad7a840188d2c8266e1db324a", filePath: "scheduling/scheduling.md" },
+  {name: "Distributed Systems", token: "aec802de8876479983053855e304f549", filePath: "distributed_systems.md"}
+];
+
+// NotionToMarkdown instance
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 (async () => {
-  const mdblocks = await n2m.pageToMarkdown("675352bdd02b40278698c99e4d0a38a7");
-  const mdString = n2m.toMarkdownString(mdblocks);
-  //const mdString = JSON.stringify(n2m.toMarkdownString(mdblocks));
-
-  console.log(mdString.parent);
-  //fs.writeFileSync('./foo.md', mdString, 'utf8');
-
+  for (const page of pages) {
+    const mdblocks = await n2m.pageToMarkdown(page.token);
+    const mdString = n2m.toMarkdownString(mdblocks);
+    fs.writeFileSync(page.filePath, mdString.parent, "utf8");
+  }
 })();
