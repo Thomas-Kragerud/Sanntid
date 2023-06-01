@@ -14,7 +14,8 @@ const notion = new Client({
 const pages = [
   { name: "Readme", token: "6df40dd4e66744bea38fcbe4dc97af9c", filePath: "README.md" },
   { name: "Scheduling", token: "8819161ad7a840188d2c8266e1db324a", filePath: "scheduling/scheduling.md" },
-  {name: "Distributed Systems", token: "aec802de8876479983053855e304f549", filePath: "distributed_systems.md"}
+  {name: "Distributed Systems", token: "aec802de8876479983053855e304f549", filePath: "distributed_systems.md"},
+  {name: "Semaphores & Synchronization", token: "675352bdd02b40278698c99e4d0a38a7", filePath: "synchronisation/semaphores_&_synchronization.md"}
 ];
 
 // NotionToMarkdown instance

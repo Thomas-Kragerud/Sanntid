@@ -1,4 +1,7 @@
 
+# Distributed Systems
+
+
 > 🩳 Make system that is:  
 > - Available   
 > - Fault tolerant  
@@ -97,7 +100,7 @@ Math proof that can only have 2 of 3.
 ### Informal proof:
 
 
-![Screenshot_2023-02-10_at_20.31.21.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1a1e8e7c-db87-4ee9-9d8d-a9d140bc535f/Screenshot_2023-02-10_at_20.31.21.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230601%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230601T200523Z&X-Amz-Expires=3600&X-Amz-Signature=0bd0b5a0fd09dd59163ce3ce0da47b6d28c773f7a55cf39da0a92fd4e45e4d6a&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Screenshot_2023-02-10_at_20.31.21.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1a1e8e7c-db87-4ee9-9d8d-a9d140bc535f/Screenshot_2023-02-10_at_20.31.21.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230601%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230601T212029Z&X-Amz-Expires=3600&X-Amz-Signature=45755c17168a8ee638b97a1119eeeaa246520b67d9a948b091c8c7feaf41abc1&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 ### We need: 
