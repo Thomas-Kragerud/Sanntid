@@ -22,7 +22,7 @@ RV MAX_TASK_ENTRIES=1
 RV MAX_TASKS=1+
 RV MAX_ENTRY_QUEUE_LENGTH=1+
 
-U eksam2022%b		eksam2022.adb		d327e6e1 NE OO SU
+U eksam2022%b		eksam2022.adb		17e56606 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.exceptions%s	a-except.adb		a-except.ali
 Z ada.real_time%s	a-reatim.adb		a-reatim.ali
@@ -53,7 +53,7 @@ D a-stream.ads		20200819050642 119b8fb3 ada.streams%s
 D a-tags.ads		20200819050643 edddc8f0 ada.tags%s
 D a-textio.ads		20200819050643 aef4d56d ada.text_io%s
 D a-unccon.ads		20200819050643 0e9b276f ada.unchecked_conversion%s
-D eksam2022.adb		20230601172509 7dd3338c eksam2022%b
+D eksam2022.adb		20230601174736 b911b36b eksam2022%b
 D interfac.ads		20200819050644 5ab55268 interfaces%s
 D i-c.ads		20200819050644 c624fa43 interfaces.c%s
 D i-cstrea.ads		20200819050644 e53d8b8e interfaces.c_streams%s
@@ -97,7 +97,7 @@ X 1 ada.ads
 16K9*Ada 20e8 10|16r6 16r23 95r5
 X 8 a-textio.ads
 57K13*Text_IO 727e16 10|16w10 16r27 95r9
-508U14*Put_Line 10|73s9 95s17
+508U14*Put_Line 10|57s13 73s9 95s17
 X 10 eksam2022.adb
 18U11*Eksam2022 18b11 96l5 96t14
 20A10 Bool_Array(boolean)<integer> 33r24

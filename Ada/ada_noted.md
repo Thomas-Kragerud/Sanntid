@@ -1,6 +1,8 @@
 
 # The Ada Programming Language
 
+Nice resournce: https://learn.adacore.com/courses/intro-to-ada/chapters/tasking.html
+
 Ada is a language used in safety-critial domains. Key proparties are the following:
 - Strong typed and has many compiler checks 
 - Large system w packages and abstractions

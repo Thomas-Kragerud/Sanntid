@@ -54,7 +54,7 @@ procedure Eksam2022 is
 
         entry finished_Rendevous when count >= 3 is
         begin
-            null;
+            Put_Line("Kjøh!");
         end finished_Rendevous;
     end Acceptance_List;
     
