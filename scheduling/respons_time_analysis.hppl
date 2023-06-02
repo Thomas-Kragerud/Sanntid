@@ -1,0 +1,67 @@
+# This is a python program for HP Prime clculator
+# Wrapped in the HPPL language 
+
+#PYTHON EXPORT Function(A)
+
+import math
+import sys
+
+def run(A):
+    tasks = list(A)
+
+    # Sort tasks by priority
+    tasks.sort(key=lambda x: x[2], reverse=True)
+
+    n_tasks = len(tasks)
+
+    # Initialize worst-case response times as computation times
+    Ws = [[task[0]] for task in tasks]
+
+    # Response time analysis
+    for i, task_i in enumerate(tasks):
+        while True:
+            W_prev = Ws[i][-1]
+            W_new = task_i[0] + sum(
+                [math.ceil(W_prev / tasks[j][1]) * tasks[j][0] for j in range(i)]
+            )
+            if W_new == W_prev or W_new > task_i[1]:
+                break
+            else:
+                Ws[i].append(W_new)
+
+    for i, task in enumerate(tasks):
+        if Ws[i][-1] <= task[1]:
+            print("Task with priority " + task[2] + "is schedulable with worst-case response time " + Ws[i][-1])
+        else:
+            print("Task with priority "+ task[2] + " is not schedulable")
+
+
+run(sys.argv[0])
+#end
+
+
+
+EXPORT py_respons_anal(A)
+BEGIN
+Function(A);
+END;
+
+
+
+
+
+#PYTHON EXPORT Function(A)
+import math
+import sys
+def run(A):
+    print(A)
+    print(type(list(A)))
+
+run(sys.argv[0])
+#end
+
+
+EXPORT py_respons_anal(A)
+BEGIN
+Function(A);
+END;
