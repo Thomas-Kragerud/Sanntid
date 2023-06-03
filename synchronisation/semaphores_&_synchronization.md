@@ -77,10 +77,10 @@ The implementaion of a semaphore with a waiting queue may result in a situation 
 ### Deadlock Example 
 
 
-![Screenshot_2023-05-08_at_19.32.48.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/93140541-7c49-4702-a0df-f6ead4ae4fd1/Screenshot_2023-05-08_at_19.32.48.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153452Z&X-Amz-Expires=3600&X-Amz-Signature=cd0e4e2624d44d7cce687190e9066011b9616370045c6cd80484024d29cd9b61&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Screenshot_2023-05-08_at_19.32.48.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/93140541-7c49-4702-a0df-f6ead4ae4fd1/Screenshot_2023-05-08_at_19.32.48.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092552Z&X-Amz-Expires=3600&X-Amz-Signature=5ece24451f8de89914c65d3cd36634e69775e8ea5bb860a3d0c5d97621bdbd9e&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
-![Screenshot_2023-05-08_at_19.32.57.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0adefb3e-87d5-42c4-a13c-654b7a7c3836/Screenshot_2023-05-08_at_19.32.57.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153452Z&X-Amz-Expires=3600&X-Amz-Signature=3a77db25de8a77af389eb5ba8edb6923d7664dc0b933ce49839c8361d85f3b64&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Screenshot_2023-05-08_at_19.32.57.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0adefb3e-87d5-42c4-a13c-654b7a7c3836/Screenshot_2023-05-08_at_19.32.57.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092552Z&X-Amz-Expires=3600&X-Amz-Signature=ba33211e6f9e8d5eb81ac8e8f3bb70a8d13a9fa6063412126da9483d699ab899&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 ## The Bounded-Buffer Problem 

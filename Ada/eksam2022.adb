@@ -20,7 +20,7 @@ procedure Eksam2022 is
     type Bool_Array is array (Integer range <>) of Boolean;
 
 
-
+    
 
     -- Define the protecte Object containing an array and the 
     -- Funcions needed to work on it 
@@ -31,8 +31,6 @@ procedure Eksam2022 is
     private
         count : Integer := 0;
         Status_Array : Bool_Array(1 .. 3) := (others => False);
-
-
     end Acceptance_List;
 
     protected body Acceptance_List is

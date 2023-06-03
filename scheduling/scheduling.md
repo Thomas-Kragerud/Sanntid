@@ -68,6 +68,9 @@ refers to the abillity of the OS to interrupt and temporarily halt a task in ord
 Situation that can occur in priority-based scheduling systems, where higher priority tasks is indirectly blocked by a lower priority task. This happens when a medium priority task preempts a lower - priority task that holds a resource needed by a high pripority task. Sins the medium priority does not reles the resource the high prioirty task cant proceed, leeding to an “Inversion” of the expected priority orde. 
 
 
+If a task is waiting for a lower-priority task, it is sait to be **blocked**. 
+
+
 ### Interference 
 
 
@@ -87,6 +90,7 @@ For a specific task, the busy period reffers to the longes intervall during whic
 
 - Context Switching
 - Makros
+- Monitors
 
 ## Non preemptiv Scheduling
 
@@ -185,17 +189,51 @@ Sufficient and Necessary & Necessary test
 
 - Sustainable - if correctly predict schedual sys will be schedual
 
-> 🥨 Pre-emptive - Forebyggende
-
-- Noen preemtive - lower priority task allowed to complete.
-- Preemptiv enable higher priority tasks to be more reactivem hence they are perferred.
-- **Deffered preemption**  - **Cooperativ dispatching** - allow lover priority task continue to execute for a bounded time (but not necessarily to completion). I.e. a middle ground be
-
 ### Simple task model 
 
 
 > 🥨 Simple model to describe some simple scheduling schemes   
 > Must imopse some restrictions on the structure of the real-time concurrent program 
+
+1. **Tasks are periodic**: It's assumed that each task repeats at a fixed rate. This assumption helps in scheduling and determining whether the system is schedulable.
+2. **Execution times are constant**: Each instance of a task is assumed to take the same amount of time to execute. This is often an average or worst-case execution time.
+3. **All tasks are independent**: It's assumed that tasks do not share resources (except the processor), and there's no inter-task communication. This implies there are no synchronization issues.
+4. **Task preemption is allowed**: Any task can be interrupted by a higher priority task. This is required by many scheduling algorithms.
+5. **Tasks are prioritized**: Each task has a priority and the scheduler always selects the highest priority task that is ready to run.
+6. **Tasks have zero switch time**: This means the time taken to switch the CPU from one task to another is negligible.
+7. **All tasks are released as soon as the system starts**: All tasks are ready to run at time zero.
+
+Regarding realism, these assumptions are often an oversimplification of reality. In actual systems:
+
+1. Tasks can be sporadic or aperiodic.
+2. Execution times can vary from one instance of a task to another.
+3. Tasks often need to share resources or communicate with each other, which can lead to synchronization and deadlock issues.
+4. Task preemption can be costly in terms of time and resources, and isn't always possible or desirable. Non-preemptive scheduling is often used in certain systems.
+5. The context switch time (time taken to switch the CPU from one task to another) can be significant, particularly for systems with complex tasks or limited resources.
+6. Tasks often do not start all at the same time; they may be released according to different schedules or in response to specific events.
+
+Despite these oversimplifications, these assumptions are still widely used because they simplify the design and analysis of real-time systems. More complex models and algorithms are needed to handle cases where these assumptions do not hol
+
+
+### Round Robin 
+
+
+is one of the simples, oldest, and most widely used scheduling algorithms in operating systems. It is designef for _time-sharing systems_ and involves _preemptive scheduling._ 
+
+
+Each task gets a fixed amount of (CPU) time known as Quantum and there is no other ordering (priority) scheme than the FIFO queue. When a process has used up its quantum it is placed in the end of the queue, and the next task is given control of the processor. 
+
+
+The Round Robin scheduling algorithm is simple and fair, as it gives each task an equal share of the CPU time. However, it doesn't take into account the priority of tasks or their expected execution time, which can lead to inefficiencies, particularly in systems with widely varying task demands. For example, it can lead to higher average waiting times compared to other more sophisticated scheduling algorithms.
+
+1. **Lack of priority handling**: In real-time systems, certain tasks may have a higher priority (such as those that are safety-critical or time-sensitive). Round Robin scheduling doesn't inherently account for these differences in priority. All tasks, regardless of their importance or urgency, are given equal time with the processor.
+2. **Response time**: If there are many tasks in the system, a task may have to wait a long time for its turn to be scheduled, leading to longer response times. This can be a significant issue in real-time systems where tasks often need to be completed within a strict deadline.
+3. **Poor performance with varied task lengths**: If the tasks vary widely in length, Round Robin can perform poorly. Short tasks can be delayed behind long ones, and long tasks can be frequently interrupted.
+
+**Turnaround time →**time from arrival to finished 
+
+
+**Waiting time →** Turnaround time - Burst time 
 
 
 ### FPS - Fixed Priority Scheduling 
@@ -223,7 +261,10 @@ FPS model is ofen used for real time systems where the timing of the task is cri
 ### Utilization-based schedulability test for FPS
 
 
-For **Rate monotonic sheduling**, a type of FPS where the task with the shortest period gets the highest priority. We have _**Liu & Laylands utilization-based schedulability test**__,_ which represent an upper bound on the CPU utilization for which task can be guaranteed to meet their deadlines under RMS. The test thus applies to preemptive scheduling. 
+For **Rate monotonic sheduling**, a type of FPS where the task with the shortest period gets the highest priority. We have _**Liu & Laylands utilization-based schedulability test**__,_ which represent an upper bound on the C
+
+
+PU utilization for which task can be guaranteed to meet their deadlines under RMS. The test thus applies to preemptive scheduling. 
 
 
 $$
@@ -253,13 +294,13 @@ Example:
 | c         | 30            | 10                      | 3               | 0.33               |
 
 
-![Time-line for the task set above](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/65ab681c-d00f-447d-b72d-d03ab04f0b81/Screenshot_2023-06-02_at_13.52.31.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153418Z&X-Amz-Expires=3600&X-Amz-Signature=b0267a81b73f56fb2f5a275b8800ce8e70a87a79f0d6d2fe20580695b4ef0425&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Time-line for the task set above](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/65ab681c-d00f-447d-b72d-d03ab04f0b81/Screenshot_2023-06-02_at_13.52.31.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092529Z&X-Amz-Expires=3600&X-Amz-Signature=5106534a3f612f08a8ca6af46f2a4b0a77025f4461b8828c0da215e012a058ba&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
-![Gnatt chart for task set A](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/95208ac8-c37d-40aa-96b8-0b29d3bd7d9a/Screenshot_2023-06-02_at_14.03.39.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153419Z&X-Amz-Expires=3600&X-Amz-Signature=9f6d34e097d0cf7c1009d6a90dab03ba9e70f78e98a3ce7a0f5a30a5a8313a57&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Gnatt chart for task set A](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/95208ac8-c37d-40aa-96b8-0b29d3bd7d9a/Screenshot_2023-06-02_at_14.03.39.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092529Z&X-Amz-Expires=3600&X-Amz-Signature=5a9a59c6e5c54bfab4194a2bc66d8275377f74da28d0a74610d58b08ef88b236&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
-![Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e66ae0a5-0f61-4166-a873-b22304513de0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153414Z&X-Amz-Expires=3600&X-Amz-Signature=946fde4225c96fafb7c5fdf3855c7ae05703f974b55be160629040ce4f07f211&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e66ae0a5-0f61-4166-a873-b22304513de0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=1b2933470c3625bff083e495dc5ce22cf4e62598551cd53c3f33fb38ad45843d&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 Hence this task fails the utilization test. 
@@ -281,7 +322,7 @@ Instead of $N $ beeing numer for tasks, let $N$ be the number of _“task famili
 | c         | 16            | 4                       | 3               | 0.25               |
 
 
-![Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f7e75080-a999-4dd3-9743-bb26c21f4512/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153414Z&X-Amz-Expires=3600&X-Amz-Signature=5a9a15cfc35a89c8834f37491829f7968d95df7bbc3708c92dbfbd9284c828dc&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f7e75080-a999-4dd3-9743-bb26c21f4512/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=6a87d0f082b79398f0649dcd4029f22281a65389b6dedc5db4494a326f780569&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 However, this is not sustainable. Consider task a going from 80 to 81. This alternation should make the system easiser to shcedule but since not a multiple of 40, the upper bound drops. 
@@ -302,6 +343,11 @@ This condition can be applied to task set where task periods $T$, are harmonic (
 
 
 ## Respons time analysis 
+
+
+> 😃 Sufficient & Necessary  
+> FPS  
+> 
 
 
 is a method used in real-time systems to predict the worst-case responstime of tasks. It is particularly usful for _**fixed priority scheduling**__._ In contrast to utilization-based tests. RTA takes into accunte the effect of _priority inversion_ and _task preemptions_. This gives a more accurate and less conservative analysis of task schedulability. 
@@ -368,6 +414,9 @@ $$
 $w_i^{n+1}$ is the $(n+1)$-th estimate of the WCRT $R $ for task i. We solve this by initialising $w_i^{0} = C_i $ and then runn untill it converges $w_i^{n+1} \simeq w_i^{n}$. This iterative process gradually refines the estimate of the WCRT, taking into account more and more of the possible interference from higher priority tasks.
 
 
+> Respons time analysis for FPS is both sufficient and necessary, meaning that if it fails it wil fail and if it succeedes it will be sechulable at runtime.
+
+
 The relation to $P_i$ (the _busy period_ for task $i$) is that the _busy period_ can be thought of as the time interval during which task $i$ or any of the higher priority tasks are ready to execute. If we denote the set of tasks with a higher priority than task i as $hp(i)$, then one can calculate the length of the _busy period_ $P_i$ as follows
 
 
@@ -395,6 +444,108 @@ Eks:
 | c         | 20            | 5                       | 1               |
 
 
+![Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f4e38d0d-0a41-4d69-b6df-2bbe2cd18d76/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=8ee6a474295044974f69475947f7723fae94f7f31cabf8335ad1554808c24ef8&X-Amz-SignedHeaders=host&x-id=GetObject)
+
+
+### Shorter Deadline than peropd 
+
+
+In real-time systems, the period $T$ of a task is the time interval between consecutive instances of the task, and the deadline $D$ is the time by which the task must finish execution. When the deadline is equal to the period ($D = T$), the _**Rate Monotonic Priority Ordering**_ (RMPO) can be used. In RMPO, the priority of a task is inversely proportional to its period; i.e., the shorter the period, the higher the priority.
+
+
+However, in some systems, the deadline of a task can be less than its period (D<T). In these cases, the _**Deadline Monotonic Priority Ordering**_ (DMPO) is used. DMPO assigns priority based on the deadline of the tasks, where the task with the shorter deadline has a higher priority. This is more intuitive because tasks that need to be completed sooner are given higher priority.
+
+
+Any task set that passes a _Fixed Priority Scheduling_ (FPS) schedulability test (like RMPO or DMPO) will also meet its timing requirements if executed under EDF
+
+
+## Task interactions and Blocking 
+
+
+Example: 
+
+
+We have 4 tasks $a, b, c, d$. Task $d$ has the highest pri and task $a$ the lowest.
+
+
+[$a$ and $d$] share a critical section $Q$, [$d$ and $c$] share also shares a critical section $V$. 
+
+
+A _**critical section**_ is like a data structure or a device. To prevent corrupation of data, <u>only one task can access this shared resource at a time</u>, which is ensured through mutual exclusion. 
+
+
+![Screenshot_2023-06-02_at_20.15.39.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b4d4cf21-f984-4343-a9bf-8e4fb3b80ce4/Screenshot_2023-06-02_at_20.15.39.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=70e304b2e0d7615ea5fc9914a74e6f0aecd62eb69857e29f82f21b1daedfce4c&X-Amz-SignedHeaders=host&x-id=GetObject)
+
+- Task $a$ released first and immediatly locks the critical section $Q$
+- Task $c$ is released next and preempts task $a$, (interrups and temporaly takes over). $C$ locks the critical section $V$
+- Task $d$, highest pri task is then releaset. Executes until it need to lock the critical section $Q$. However $Q$ is allready locked by $a$. As a result $d$ must wait and $c$ continous (_priority inversion_)
+- Once task $c$ is done, task $b$ starts running. Task $a$ only continues once $b $ is finished, after which it completes it use of $Q$ and lets $d$ continue.
+
+In this scenario, task d experiences significant priority inversion. It gets blocked not just by lower priority task a, but also by tasks b and c. This blocking can severely affect the system's schedulability, the ability of a system to ensure all tasks complete within their deadlines.
+
+
+![Screenshot_2023-06-02_at_20.18.33.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/45011e9e-f6a6-45d8-b7d6-6d489b1321ce/Screenshot_2023-06-02_at_20.18.33.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=32cf965a4c5e66f26e1358faf5e22062838e0a4fb8cdd69ae030200c4f40fd24&X-Amz-SignedHeaders=host&x-id=GetObject)
+
+
+### Priority inheritance 
+
+
+A solution to this problem can be to incorperate _**priority inheritance**__._ With _priority inheritance_ task priority is no longer static. Task $a$ will therfore inherit the priority of task $d$, and will run in preference to task $c$ and $b$. A consequence is that task $b $ will suffer from _blockeing_ even though it does not share a resource. 
+
+
+![Priority inheritance with example above](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ad4b98cf-6d37-4ddf-bb20-de16ceafe44e/Screenshot_2023-06-02_at_20.27.42.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=be57bf4c6c040ccae1296c18d13007c64fd9355e850c5d11532d3bd24ce22ed3&X-Amz-SignedHeaders=host&x-id=GetObject)
+
+
+There is a limit to how often a high-pri task can be blocked by low pri tasks. Let $i$ be a task that has to go through $n$ _critial sections._ Then in worst case scenario where each of these critical sections is already being used by a lower-pri task, our higher pri task $i$ could be blocked $n$ times. 
+
+
+If the number of lower-prioritytask $m$ is less than the number of critical sections $n$ ($m < n )$. Then the maximum blocking of task $i$ is $m$. 
+
+
+We define $B$ as **longes time that our task can be blocked**. For a _**basic priority inheritance protocol**_, we can calculate $B$ using this formula. 
+
+
+$$
+B_i = \sum_{k=1}^{K}\text{usage}(k, i)C(k)
+$$
+
+
+The $\text{usage}$ is a binary function. For a given critical section $k$ and task $i$, the $\text{usage}(k, i)$ is $1$ if resource $k$ is accessed by atleast one task with lower priority than $i$ and on task with priority equal to or greater than $i$. Otherwise, it gives a result of 0.
+
+
+$C(k) $ is the worst-case execution time of critical section $k$.
+
+
+The formula assumes single cost for using a resource. Additionally, it sums up the blocking times from each resource, but this only makes sense if resource is used by a different lower priority task. If all resources are used by the same lower-priority task, there should only be one term included in the equation for $B$. 
+
+
+With the addition of longest blocking time $B$, we can reformulate our formula for WCRT $R$. 
+
+
+$$
+R = C + B + I
+$$
+
+
+ That is, 
+
+
+$$
+R_i = C_i + B_i + \sum_{j \in hp(i)}\left\lceil\frac{R_i}{T_j}\right\rceil C_j
+$$
+
+
+which then gives, 
+
+
+$$
+w_i^{n+ 1} = C_i + B_i + \sum_{j \in hp(i)}\left\lceil\frac{w_i^n}{T_j}\right\rceil C_j
+$$
+
+
+However, this may not be a very efficient method as it can lead to overestimation of the blocking time. Whether a task will experience its maximum blocking time will depend on the phasing of the tasks. If all tasks are periodic and share the same period, there will be no preemption, and hence no priority inversion will occur.
+
+
 ### Temporal constraints 
 
 
@@ -403,5 +554,5 @@ Real-time constraints specify temporal properties with an explicit reference to 
 Nontemporal constraints are properties that are not related to time. Existing work on CT has been mainly focused on nontemporal constraints. This is partly because temporal constraints involve the extra dimension of time and are thus more difficult to handle.
 
 
-![Screenshot_2023-06-02_at_13.52.16.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/530407e8-04fc-4410-affa-f4f48f723fce/Screenshot_2023-06-02_at_13.52.16.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230602%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230602T153414Z&X-Amz-Expires=3600&X-Amz-Signature=452442027c89f30de9353b40b338f5f1663ac0bec5e23c8f6dce7151fbf9542b&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Screenshot_2023-06-02_at_13.52.16.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/530407e8-04fc-4410-affa-f4f48f723fce/Screenshot_2023-06-02_at_13.52.16.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230603%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230603T092525Z&X-Amz-Expires=3600&X-Amz-Signature=ecb0fc0aa49a1b2e1d82c7077dc1aa330856114dfebfe8e69577e298ccd62b43&X-Amz-SignedHeaders=host&x-id=GetObject)
 
